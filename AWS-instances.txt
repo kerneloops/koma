@@ -1,0 +1,39 @@
+tees.bitcoins 
+
+Ohio: c4.8xlarge 36vCPU/10-cores/20-threads/60GB RAM
+
+ssh -i "tees.bitcoins.ohio.pem" ubuntu@ec2-52-15-153-27.us-east-2.compute.amazonaws.com
+
+
+offshore.ahola 
+
+Ohio: c4.8xlarge 36vCPU/10-cores/20-threads/60GB RAM
+
+ssh -i "offshore.ahola.ohio.pem" ubuntu@ec2-52-15-41-190.us-east-2.compute.amazonaws.com
+
+
+
+kost/nheqminer
+
+apt-get -y update && apt-get -y install git cmake build-essential libboost-all-dev && git clone --recursive https://github.com/kost/nheqminer.git && cd nheqminer/nheqminer && cd nheqminer/nheqminer
+mkdir build && cd build 
+cmake -DXENON=2 .. 
+make
+
+screen ./nheqminer -l zec.suprnova.cc:2142 -u kerneloops.amazon -p theragas -t 36
+
+
+OCMiner/NiceHash
+
+apt-get -y install git cmake build-essential libboost-all-dev
+git clone -b Linux https://github.com/nicehash/nheqminer.git
+cd nheqminer/cpu_xenoncat/Linux/asm/
+sh assemble.sh
+cd ../../../Linux_cmake/nheqminer_cpu
+cmake .
+make -j $(nproc)
+
+
+screen ./nheqminer_cpu -l equihash.usa.nicehash.com:3357 -u 15AVyD1hLpaNh7fsBGXXJHMDdFdqoN5QtP.worker1 -t 36
+
+alias nicehash="cd ~/builds/nicehash-overwatch && node app.js"
